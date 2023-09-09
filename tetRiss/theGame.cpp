@@ -75,17 +75,17 @@ int Rotate(int px, int py, int r)
 	case 0: // 0 degrees			// 0  1  2  3
 		pi = py * 4 + px;			// 4  5  6  7
 		break;						// 8  9 10 11
-		//12 13 14 15
+		                            //12 13 14 15
 
 	case 1: // 90 degrees			//12  8  4  0
 		pi = 12 + py - (px * 4);	//13  9  5  1
 		break;						//14 10  6  2
-		//15 11  7  3
+		                            //15 11  7  3
 
 	case 2: // 180 degrees			//15 14 13 12
 		pi = 15 - (py * 4) - px;	//11 10  9  8
 		break;						// 7  6  5  4
-		// 3  2  1  0
+		                            // 3  2  1  0
 
 	case 3: // 270 degrees			// 3  7 11 15
 		pi = 3 - py + (px * 4);		// 2  6 10 14
@@ -128,7 +128,7 @@ bool DoesPieceFit(int nTetromino, int nRotation, int nPosX, int nPosY)
 int main()
 {
 	// Create Screen Buffer
-	wchar_t* screen = new wchar_t[nScreenWidth * nScreenHeight];
+	wchar_t* screen = new wchar_t[nScreenWidth * nScreenHeight+225*2];
 	for (int i = 0; i < nScreenWidth * nScreenHeight; i++) screen[i] = L' ';
 	HANDLE hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
 	SetConsoleActiveScreenBuffer(hConsole);
@@ -142,18 +142,19 @@ int main()
 	tetromino[5].append(L".X...X...XX.....");
 	tetromino[6].append(L"..X...X..XX.....");
 
+
 	pField = new unsigned char[nFieldWidth * nFieldHeight]; // Create play field buffer
 	for (int x = 0; x < nFieldWidth; x++) // Board Boundary
 		for (int y = 0; y < nFieldHeight; y++)
 			pField[y * nFieldWidth + x] = (x == 0 || x == nFieldWidth - 1 || y == nFieldHeight - 1) ? 9 : 0;
 
 	// Game Logic
-	bool bKey[4];
+	bool bKey[4]{};
 	int nCurrentPiece = 0;
 	int nCurrentRotation = 0;
 	int nCurrentX = nFieldWidth / 2;
 	int nCurrentY = 0;
-	int nSpeed = 20;
+	int nSpeed = 40;	// initially 20
 	int nSpeedCount = 0;
 	bool bForceDown = false;
 	bool bRotateHold = true;
@@ -165,7 +166,7 @@ int main()
 	while (!bGameOver) // Main Loop
 	{
 		// Timing =======================
-		this_thread::sleep_for(50ms); // Small Step = 1 Game Tick
+		this_thread::sleep_for(70ms); // Small Step = 1 Game Tick  initially 50ms
 		nSpeedCount++;
 		bForceDown = (nSpeedCount == nSpeed);
 
@@ -196,7 +197,7 @@ int main()
 			nSpeedCount = 0;
 			nPieceCount++;
 			if (nPieceCount % 50 == 0)
-				if (nSpeed >= 10) nSpeed--;
+				if (nSpeed >= 20) nSpeed--;     // initially 10
 
 			// Test if piece can be moved down
 			if (DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY + 1))

@@ -166,7 +166,7 @@ int main()
 
 	while (!bGameOver) // Main Loop
 	{
-		srand(time(NULL));
+		srand(time(NULL));		// added to make every time different - need ctime i think
 		// Timing =======================
 		this_thread::sleep_for(64ms); // Small Step = 1 Game Tick  initially 50ms
 		nSpeedCount++;

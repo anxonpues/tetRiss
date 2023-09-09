@@ -55,6 +55,7 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <ctime>
 using namespace std;
 
 #include <stdio.h>
@@ -154,7 +155,7 @@ int main()
 	int nCurrentRotation = 0;
 	int nCurrentX = nFieldWidth / 2;
 	int nCurrentY = 0;
-	int nSpeed = 40;	// initially 20
+	int nSpeed = 36;	// initially 20
 	int nSpeedCount = 0;
 	bool bForceDown = false;
 	bool bRotateHold = true;
@@ -165,13 +166,14 @@ int main()
 
 	while (!bGameOver) // Main Loop
 	{
+		srand(time(NULL));
 		// Timing =======================
-		this_thread::sleep_for(70ms); // Small Step = 1 Game Tick  initially 50ms
+		this_thread::sleep_for(64ms); // Small Step = 1 Game Tick  initially 50ms
 		nSpeedCount++;
 		bForceDown = (nSpeedCount == nSpeed);
 
 		// Input ========================
-		for (int k = 0; k < 4; k++)								// R   L   D Z
+		for (int k = 0; k < 4; k++)								// R   L   D  Z
 			bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28Z"[k]))) != 0;
 
 		// Game Logic ===================

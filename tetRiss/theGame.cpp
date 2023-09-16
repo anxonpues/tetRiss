@@ -128,6 +128,10 @@ bool DoesPieceFit(int nTetromino, int nRotation, int nPosX, int nPosY)
 
 int main()
 {
+	srand(time(NULL));		// added to make every time different - need ctime i think
+	int clrand{ 0 };
+	for (int i = 0; i < 10; i++)
+		clrand = rand();
 	// Create Screen Buffer
 	wchar_t* screen = new wchar_t[nScreenWidth * nScreenHeight+225*2];
 	for (int i = 0; i < nScreenWidth * nScreenHeight; i++) screen[i] = L' ';
@@ -151,11 +155,11 @@ int main()
 
 	// Game Logic
 	bool bKey[4]{};
-	int nCurrentPiece = 0;
+	int nCurrentPiece = clrand % 7;		// in theory this fixes the start tm
 	int nCurrentRotation = 0;
 	int nCurrentX = nFieldWidth / 2;
 	int nCurrentY = 0;
-	int nSpeed = 36;	// initially 20
+	int nSpeed = 30;	// initially 20
 	int nSpeedCount = 0;
 	bool bForceDown = false;
 	bool bRotateHold = true;
@@ -166,7 +170,7 @@ int main()
 
 	while (!bGameOver) // Main Loop
 	{
-		srand(time(NULL));		// added to make every time different - need ctime i think
+		
 		// Timing =======================
 		this_thread::sleep_for(64ms); // Small Step = 1 Game Tick  initially 50ms
 		nSpeedCount++;
@@ -199,7 +203,7 @@ int main()
 			nSpeedCount = 0;
 			nPieceCount++;
 			if (nPieceCount % 50 == 0)
-				if (nSpeed >= 20) nSpeed--;     // initially 10
+				if (nSpeed >= 16) nSpeed--;     // initially 10
 
 			// Test if piece can be moved down
 			if (DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY + 1))

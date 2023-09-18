@@ -200,8 +200,10 @@ int main()
 			bKey[4] = false;	// switch off pause 
 			while (!bKey[5])
 			{
-				for (int k = 0; k < 6; k++)								// R   L   D  Z
-					bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28ZXC"[k]))) != 0;
+				int k = 5;		// only test if C is pressed
+				bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28ZXC"[k]))) != 0;
+				//for (int k = 0; k < 6; k++)								// R   L   D  Z
+				//	bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28ZXC"[k]))) != 0;
 			}
 		}
 

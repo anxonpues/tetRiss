@@ -128,7 +128,8 @@ bool DoesPieceFit(int nTetromino, int nRotation, int nPosX, int nPosY)
 
 int main()
 {
-	srand(time(NULL));		// added to make every time different - need ctime i think
+	time_t* forseed{ nullptr };
+	srand((unsigned)time(forseed));		// added to make every time different - need ctime i think
 	int clrand{ 0 };
 	for (int i = 0; i < 10; i++)
 		clrand = rand();

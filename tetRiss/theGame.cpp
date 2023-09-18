@@ -179,6 +179,7 @@ int main()
 
 		// Input ========================
 		for (int k = 0; k < 6; k++)	
+				                                                //Z-turn   X-set pause C-unset pause
 		{														// R   L   D  ZXC
 			bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28ZXC"[k]))) != 0;
 		}
@@ -198,7 +199,7 @@ int main()
 		}
 		else
 			bRotateHold = true;
-		// force pause   let's see if it works
+		// force pause   
 		if (bKey[4])
 		{
 			bKey[4] = false;	// switch off pause 
@@ -251,9 +252,9 @@ int main()
 				if (!vLines.empty())	nScore += (1 << vLines.size()) * 100;
 
 				// Pick New Piece
-				nCurrentX = nFieldWidth / 2;
+				nCurrentX = rand() % nFieldWidth;              // nFieldWidth / 2;
 				nCurrentY = 0;
-				nCurrentRotation = 0;
+				nCurrentRotation = rand() % 4;                     // 0;
 				nCurrentPiece = rand() % 7;
 
 				// If piece does not fit straight away, game over!

@@ -177,8 +177,11 @@ int main()
 		bForceDown = (nSpeedCount == nSpeed);
 
 		// Input ========================
-		for (int k = 0; k < 6; k++)								// R   L   D  Z
+		for (int k = 0; k < 6; k++)	
+		{														// R   L   D  ZXC
 			bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28ZXC"[k]))) != 0;
+		}
+			
 		// Game Logic ===================
 
 		// Handle player movement
@@ -202,9 +205,8 @@ int main()
 			{
 				int k = 5;		// only test if C is pressed
 				bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28ZXC"[k]))) != 0;
-				//for (int k = 0; k < 6; k++)								// R   L   D  Z
-				//	bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28ZXC"[k]))) != 0;
 			}
+			bKey[5] = false;
 		}
 
 		// Force the piece down the playfield if it's time

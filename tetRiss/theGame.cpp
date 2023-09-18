@@ -154,7 +154,7 @@ int main()
 			pField[y * nFieldWidth + x] = (x == 0 || x == nFieldWidth - 1 || y == nFieldHeight - 1) ? 9 : 0;
 
 	// Game Logic
-	bool bKey[4]{};
+	bool bKey[6]{};		// initially 4   add one for pause 
 	int nCurrentPiece = clrand % 7;		// in theory this fixes the start tm
 	int nCurrentRotation = 0;
 	int nCurrentX = nFieldWidth / 2;
@@ -177,9 +177,8 @@ int main()
 		bForceDown = (nSpeedCount == nSpeed);
 
 		// Input ========================
-		for (int k = 0; k < 4; k++)								// R   L   D  Z
-			bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28Z"[k]))) != 0;
-
+		for (int k = 0; k < 6; k++)								// R   L   D  Z
+			bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28ZXC"[k]))) != 0;
 		// Game Logic ===================
 
 		// Handle player movement
@@ -195,6 +194,16 @@ int main()
 		}
 		else
 			bRotateHold = true;
+		// force pause   let's see if it works
+		if (bKey[4])
+		{
+			bKey[4] = false;	// switch off pause 
+			while (!bKey[5])
+			{
+				for (int k = 0; k < 6; k++)								// R   L   D  Z
+					bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28ZXC"[k]))) != 0;
+			}
+		}
 
 		// Force the piece down the playfield if it's time
 		if (bForceDown)

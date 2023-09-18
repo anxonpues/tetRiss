@@ -252,7 +252,7 @@ int main()
 				if (!vLines.empty())	nScore += (1 << vLines.size()) * 100;
 
 				// Pick New Piece
-				nCurrentX = rand() % nFieldWidth;              // nFieldWidth / 2;
+				nCurrentX = rand() % nFieldWidth + 1;              // nFieldWidth / 2;
 				nCurrentY = 0;
 				nCurrentRotation = rand() % 4;                     // 0;
 				nCurrentPiece = rand() % 7;
